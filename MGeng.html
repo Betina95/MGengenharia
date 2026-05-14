@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magnus Engenharia e Projetos | Engenharia Mecânica de Precisão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Barlow:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --magnus-dark: #0A2540;
+            --magnus-blue: #2E6F95;
+            --magnus-light: #F5F7FA;
+        }
+
+        /* =====================
+           BASE & TIPOGRAFIA
+        ===================== */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden; /* CORREÇÃO: impede scroll horizontal em mobile */
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Barlow', sans-serif;
+        }
+
+        /* Evita que textos longos quebrem o layout em telas pequenas */
+        h1, h2, h3 {
+            overflow-wrap: break-word;
+            hyphens: none;
+        }
+
+        /* =====================
+           CORES CUSTOM
+        ===================== */
+        .bg-magnus-dark  { background-color: var(--magnus-dark); }
+        .text-magnus-dark { color: var(--magnus-dark); }
+        .bg-magnus-blue  { background-color: var(--magnus-blue); }
+        .text-magnus-blue { color: var(--magnus-blue); }
+        .bg-magnus-light { background-color: var(--magnus-light); }
+
+        /* =====================
+           GRID INDUSTRIAL
+        ===================== */
+        .industrial-grid {
+            background-image: radial-gradient(rgba(46, 111, 149, 0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* =====================
+           CARDS DE SERVIÇO
+        ===================== */
+        .service-card {
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+                        box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        /* CORREÇÃO: hover só em dispositivos com ponteiro fino (desktop) */
+        @media (hover: hover) {
+            .service-card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            }
+        }
+
+        /* =====================
+           WHATSAPP PULSE
+        ===================== */
+        .whatsapp-pulse {
+            animation: pulse-green 2.5s infinite;
+        }
+        @keyframes pulse-green {
+            0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70%  { box-shadow: 0 0 0 14px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        /* =====================
+           HERO GRADIENT
+        ===================== */
+        .hero-gradient {
+            /* MELHORIA: gradiente um pouco mais forte no mobile para legibilidade */
+            background: linear-gradient(
+                to right,
+                rgba(10, 37, 64, 0.97) 0%,
+                rgba(10, 37, 64, 0.80) 60%,
+                rgba(10, 37, 64, 0.50) 100%
+            );
+        }
+
+        /* =====================
+           MOBILE MENU — fluidez
+        ===================== */
+        #mobile-menu {
+            display: flex; /* garante flex mesmo quando não está hidden */
+        }
+        #mobile-menu.hidden {
+            display: none;
+        }
+
+        /* =====================
+           SEÇÃO AUTORIDADE —
+           evita overflow no mobile
+        ===================== */
+        .authority-section {
+            /* CORREÇÃO: tira o -mt-10 e margin-x que causava overflow lateral */
+            position: relative;
+            z-index: 20;
+        }
+
+        /* =====================
+           BOTÕES — touch target mínimo 44px
+        ===================== */
+        .btn {
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+
+        /* =====================
+           FORMULÁRIO — melhor foco
+        ===================== */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--magnus-blue);
+        }
+
+        /* =====================
+           SEÇÃO CONTATO —
+           formulário não quebra no mobile
+        ===================== */
+        .contact-form-section {
+            padding: 2rem 1.25rem;
+        }
+        @media (min-width: 1024px) {
+            .contact-form-section {
+                padding: 3rem;
+            }
+        }
+
+        /* =====================
+           EMAIL longo no mobile
+        ===================== */
+        .email-break {
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        /* =====================
+           CAD SECTION —
+           imagens não estouram em mobile
+        ===================== */
+        .cad-image-col {
+            min-width: 0; /* garante que o flex/grid não estoure */
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800">
+
+    <!-- ===================== BOTÃO FLUTUANTE WHATSAPP ===================== -->
+    <a href="https://wa.me/5511949708584?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento"
+       target="_blank"
+       aria-label="Falar pelo WhatsApp"
+       class="fixed bottom-5 right-5 z-50 bg-green-500 text-white p-4 rounded-full shadow-2xl whatsapp-pulse flex items-center justify-center transition-transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-green-300">
+        <i data-lucide="message-circle" class="w-7 h-7"></i>
+    </a>
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="fixed w-full z-40 bg-magnus-dark/95 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+
+                <!-- Logo -->
+                <a href="#inicio" class="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-magnus-blue rounded-lg p-1">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-magnus-blue flex items-center justify-center rounded-lg flex-shrink-0">
+                        <i data-lucide="component" class="text-white w-5 h-5 sm:w-6 sm:h-6"></i>
+                    </div>
+                    <div>
+                        <span class="block text-white font-extrabold text-lg sm:text-xl leading-none tracking-tight">MAGNUS</span>
+                        <span class="block text-magnus-blue font-bold text-[10px] sm:text-xs tracking-[0.2em] uppercase">Engenharia</span>
+                    </div>
+                </a>
+
+                <!-- Nav Desktop -->
+                <nav class="hidden md:flex items-center gap-6 lg:gap-8">
+                    <a href="#inicio"   class="text-gray-300 hover:text-white text-sm font-semibold uppercase tracking-wider transition">Início</a>
+                    <a href="#servicos" class="text-gray-300 hover:text-white text-sm font-semibold uppercase tracking-wider transition">Serviços</a>
+                    <a href="#sobre"    class="text-gray-300 hover:text-white text-sm font-semibold uppercase tracking-wider transition">Sobre</a>
+                    <a href="#contato"  class="text-gray-300 hover:text-white text-sm font-semibold uppercase tracking-wider transition">Contato</a>
+                    <!-- MELHORIA: botão CTA com padding mais generoso e border-radius suave -->
+                    <a href="https://wa.me/5511949708584"
+                       class="btn bg-magnus-blue text-white px-5 lg:px-6 py-2.5 rounded-lg text-sm font-bold uppercase tracking-widest hover:bg-blue-600 shadow-lg shadow-blue-900/20 whitespace-nowrap">
+                        Solicitar Orçamento
+                    </a>
+                </nav>
+
+                <!-- Botão Hamburguer -->
+                <button id="mobile-menu-toggle"
+                        aria-label="Abrir menu"
+                        aria-expanded="false"
+                        class="md:hidden text-white p-2 rounded-lg hover:bg-white/10 transition focus:outline-none focus:ring-2 focus:ring-white/50">
+                    <i data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================== MOBILE MENU OVERLAY ===================== -->
+    <!-- MELHORIA: menu com animação suave, melhor tipografia e espaçamento -->
+    <div id="mobile-menu"
+         class="fixed inset-0 z-[100] bg-magnus-dark hidden flex-col items-center justify-center gap-6 text-center px-6 py-8">
+
+        <button id="close-menu"
+                aria-label="Fechar menu"
+                class="absolute top-5 right-5 text-white p-2 rounded-lg hover:bg-white/10 transition">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+
+        <!-- Logo no menu mobile -->
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-9 h-9 bg-magnus-blue flex items-center justify-center rounded-lg">
+                <i data-lucide="component" class="text-white w-5 h-5"></i>
+            </div>
+            <span class="text-white font-extrabold text-xl tracking-tight">MAGNUS</span>
+        </div>
+
+        <nav class="flex flex-col items-center gap-5 w-full">
+            <a href="#inicio"   class="text-white text-xl font-bold tracking-wide hover:text-magnus-blue transition w-full py-2 border-b border-white/10">Início</a>
+            <a href="#servicos" class="text-white text-xl font-bold tracking-wide hover:text-magnus-blue transition w-full py-2 border-b border-white/10">Serviços</a>
+            <a href="#sobre"    class="text-white text-xl font-bold tracking-wide hover:text-magnus-blue transition w-full py-2 border-b border-white/10">Sobre</a>
+            <a href="#contato"  class="text-white text-xl font-bold tracking-wide hover:text-magnus-blue transition w-full py-2 border-b border-white/10">Contato</a>
+        </nav>
+
+        <a href="https://wa.me/5511949708584"
+           class="btn bg-magnus-blue text-white w-full max-w-xs py-4 rounded-xl font-black uppercase tracking-wider text-base mt-4 hover:bg-blue-600 transition">
+            Solicitar Orçamento
+        </a>
+    </div>
+
+    <main>
+        <!-- ===================== HERO SECTION ===================== -->
+        <section id="inicio" class="relative min-h-screen flex items-center pt-16 sm:pt-20 overflow-hidden bg-slate-900">
+
+            <!-- BG Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&q=80&w=2000"
+                     alt=""
+                     aria-hidden="true"
+                     class="w-full h-full object-cover opacity-40">
+                <div class="absolute inset-0 hero-gradient"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 sm:py-20 lg:py-28 w-full">
+                <div class="max-w-3xl">
+
+                    <!-- Eyebrow -->
+                    <div class="flex items-center gap-3 mb-5 sm:mb-6">
+                        <span class="w-8 sm:w-12 h-[2px] bg-magnus-blue flex-shrink-0"></span>
+                        <!-- MELHORIA: texto menor no mobile para não quebrar -->
+                        <span class="text-magnus-blue font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-xs sm:text-sm">
+                            Da ideia à solução técnica
+                        </span>
+                    </div>
+
+                    <!-- H1 — CORREÇÃO: tamanho menor no mobile para não sair da tela -->
+                    <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-5 sm:mb-6 leading-tight">
+                        Soluções em Engenharia Mecânica com
+                        <span class="text-magnus-blue"> Precisão e Compromisso</span>
+                    </h1>
+
+                    <!-- Subtítulo -->
+                    <p class="text-base sm:text-lg lg:text-xl text-gray-300 mb-8 sm:mb-10 leading-relaxed font-light max-w-2xl">
+                        Laudos técnicos, ART, projetos mecânicos e impressão 3D com qualidade e eficiência para indústrias e empresas de todo o Brasil.
+                    </p>
+
+                    <!-- MELHORIA: botões em coluna no mobile, lado a lado no sm+ -->
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <a href="#servicos"
+                           class="btn px-7 sm:px-10 py-4 sm:py-5 bg-white text-magnus-dark font-extrabold rounded-lg uppercase tracking-wider hover:bg-magnus-blue hover:text-white transition-all gap-2 text-sm sm:text-base w-full sm:w-auto">
+                            Ver Serviços <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://wa.me/5511949708584"
+                           class="btn px-7 sm:px-10 py-4 sm:py-5 bg-magnus-blue text-white font-extrabold rounded-lg uppercase tracking-wider hover:bg-blue-600 transition-all gap-2 text-sm sm:text-base w-full sm:w-auto">
+                            Solicitar Orçamento <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== SEÇÃO AUTORIDADE ===================== -->
+        <!-- CORREÇÃO: retirado margin negativo e margin lateral que causava overflow.
+             Agora é uma faixa full-width com padding interno no mobile,
+             e com max-w + rounded só no md+. -->
+        <section class="authority-section bg-magnus-blue">
+            <!-- Container interno com arredondamento visual apenas em md+ -->
+            <div class="md:max-w-6xl md:mx-4 lg:mx-auto md:rounded-xl md:shadow-2xl md:-mt-10 md:relative overflow-hidden">
+                <div class="bg-magnus-blue">
+                    <div class="grid grid-cols-2 md:grid-cols-4 divide-y divide-white/20 md:divide-y-0 md:divide-x md:divide-white/20">
+
+                        <!-- ITEM 1 -->
+                        <div class="flex flex-col items-center justify-center px-4 py-6 md:py-8">
+                            <p class="text-2xl md:text-3xl font-black text-white text-center leading-tight">CREA</p>
+                            <p class="mt-1 text-[10px] md:text-xs uppercase font-bold tracking-widest text-white/80 text-center leading-snug">
+                                Laudos e Emissão de ART
+                            </p>
+                        </div>
+
+                        <!-- ITEM 2 -->
+                        <div class="flex flex-col items-center justify-center px-4 py-6 md:py-8">
+                            <p class="text-2xl md:text-3xl font-black text-white text-center leading-tight">CAD</p>
+                            <p class="mt-1 text-[10px] md:text-xs uppercase font-bold tracking-widest text-white/80 text-center leading-snug">
+                                Modelagem Industrial
+                            </p>
+                        </div>
+
+                        <!-- ITEM 3 — CORREÇÃO: "IMPRESSÃO 3D" era maior que a célula no mobile -->
+                        <div class="flex flex-col items-center justify-center px-4 py-6 md:py-8">
+                            <p class="text-lg md:text-3xl font-black text-white text-center leading-tight">IMPRESSÃO 3D</p>
+                            <p class="mt-1 text-[10px] md:text-xs uppercase font-bold tracking-widest text-white/80 text-center leading-snug">
+                                Prototipagem
+                            </p>
+                        </div>
+
+                        <!-- ITEM 4 -->
+                        <div class="flex flex-col items-center justify-center px-4 py-6 md:py-8">
+                            <p class="text-2xl md:text-3xl font-black text-white text-center leading-tight">BR</p>
+                            <p class="mt-1 text-[10px] md:text-xs uppercase font-bold tracking-widest text-white/80 text-center leading-snug">
+                                Atendimento Nacional
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== SERVIÇOS SECTION ===================== -->
+        <section id="servicos" class="py-16 sm:py-20 lg:py-24 bg-magnus-light industrial-grid">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Header da seção -->
+                <div class="mb-12 sm:mb-16 lg:mb-20">
+                    <span class="text-magnus-blue font-bold uppercase tracking-[0.2em] text-xs sm:text-sm">NOSSAS SOLUÇÕES</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-magnus-dark mt-2 mb-4 sm:mb-6">
+                        Expertise em Cada Detalhe
+                    </h2>
+                    <div class="w-16 sm:w-20 h-1.5 sm:h-2 bg-magnus-blue rounded-full"></div>
+                </div>
+
+                <!-- MELHORIA: grid responsivo — 1 col mobile, 2 col tablet, 4 col desktop -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+
+                    <!-- Serviço 1 -->
+                    <div class="bg-white service-card rounded-xl overflow-hidden flex flex-col border border-gray-200 shadow-sm">
+                        <div class="h-44 sm:h-48 overflow-hidden relative">
+                            <img src=".\imagens\nr11.png" alt="Empilhadeira — NR 11" class="w-full h-full object-cover">
+                            <div class="absolute top-3 right-3 bg-magnus-blue text-white p-2 rounded-lg">
+                                <i data-lucide="truck" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 flex-grow flex flex-col">
+                            <h3 class="text-base font-extrabold text-magnus-dark mb-3 uppercase tracking-tighter">Laudo NR 11</h3>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Movimentação de materiais</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Armazenagem segura</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Emissão de ART</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Serviço 2 -->
+                    <div class="bg-white service-card rounded-xl overflow-hidden flex flex-col border border-gray-200 shadow-sm">
+                        <div class="h-44 sm:h-48 overflow-hidden relative">
+                            <img src=".\imagens\nr12.png" alt="Máquina industrial — NR 12" class="w-full h-full object-cover">
+                            <div class="absolute top-3 right-3 bg-magnus-blue text-white p-2 rounded-lg">
+                                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 flex-grow flex flex-col">
+                            <h3 class="text-base font-extrabold text-magnus-dark mb-3 uppercase tracking-tighter">Laudo NR 12</h3>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Segurança em máquinas</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Proteção de equipamentos</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Emissão de ART</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Serviço 3 -->
+                    <div class="bg-white service-card rounded-xl overflow-hidden flex flex-col border border-gray-200 shadow-sm">
+                        <div class="h-44 sm:h-48 overflow-hidden relative">
+                            <img src=".\imagens\nr13.png" alt="Vaso de pressão — NR 13" class="w-full h-full object-cover">
+                            <div class="absolute top-3 right-3 bg-magnus-blue text-white p-2 rounded-lg">
+                                <i data-lucide="gauge" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 flex-grow flex flex-col">
+                            <h3 class="text-base font-extrabold text-magnus-dark mb-3 uppercase tracking-tighter">Laudo NR 13</h3>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Caldeiras e vasos</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Inspeção técnica rigorosa</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Emissão de ART</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Serviço 4 -->
+                    <div class="bg-white service-card rounded-xl overflow-hidden flex flex-col border border-gray-200 shadow-sm">
+                        <div class="h-44 sm:h-48 overflow-hidden relative">
+                            <img src=".\imagens\arcon.png" alt="Ar condicionado — PMOC" class="w-full h-full object-cover">
+                            <div class="absolute top-3 right-3 bg-magnus-blue text-white p-2 rounded-lg">
+                                <i data-lucide="wind" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 flex-grow flex flex-col">
+                            <h3 class="text-base font-extrabold text-magnus-dark mb-3 uppercase tracking-tighter">PMOC (Ar Condicionado)</h3>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Plano de Manutenção</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Higienização de sistemas</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Emissão de ART</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Serviço 5 -->
+                    <div class="bg-white service-card rounded-xl overflow-hidden flex flex-col border border-gray-200 shadow-sm">
+                        <div class="h-44 sm:h-48 overflow-hidden relative">
+                            <img src=".\imagens\cozinha.jpg" alt="Exaustão industrial" class="w-full h-full object-cover">
+                            <div class="absolute top-3 right-3 bg-magnus-blue text-white p-2 rounded-lg">
+                                <i data-lucide="fan" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 flex-grow flex flex-col">
+                            <h3 class="text-base font-extrabold text-magnus-dark mb-3 uppercase tracking-tighter">Exaustores</h3>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Cozinhas industriais</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Limpeza e Eficiência</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Emissão de ART</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Serviço 6 -->
+                    <div class="bg-white service-card rounded-xl overflow-hidden flex flex-col border border-gray-200 shadow-sm">
+                        <div class="h-44 sm:h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80&w=600"
+                                 alt="Inspeção automotiva" class="w-full h-full object-cover">
+                            <div class="absolute top-3 right-3 bg-magnus-blue text-white p-2 rounded-lg">
+                                <i data-lucide="search" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 flex-grow flex flex-col">
+                            <h3 class="text-base font-extrabold text-magnus-dark mb-3 uppercase tracking-tighter">Perícia de Veículos</h3>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Problemas mecânicos</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Assistência Judicial</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Emissão de ART</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Serviço 7 -->
+                    <div class="bg-white service-card rounded-xl overflow-hidden flex flex-col border border-gray-200 shadow-sm">
+                        <div class="h-44 sm:h-48 overflow-hidden relative">
+                            <img src=".\imagens\parque.png" alt="Playground" class="w-full h-full object-cover">
+                            <div class="absolute top-3 right-3 bg-magnus-blue text-white p-2 rounded-lg">
+                                <i data-lucide="smile" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 flex-grow flex flex-col">
+                            <h3 class="text-base font-extrabold text-magnus-dark mb-3 uppercase tracking-tighter">Laudo de Brinquedos</h3>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Parques e Playgrounds</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Segurança Recreativa</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Emissão de ART</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Serviço 8 -->
+                    <div class="bg-white service-card rounded-xl overflow-hidden flex flex-col border border-gray-200 shadow-sm">
+                        <div class="h-44 sm:h-48 overflow-hidden relative">
+                            <img src=".\imagens\pesa.jpg" alt="Máquinas pesadas" class="w-full h-full object-cover">
+                            <div class="absolute top-3 right-3 bg-magnus-blue text-white p-2 rounded-lg">
+                                <i data-lucide="wrench" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="p-5 sm:p-6 flex-grow flex flex-col">
+                            <h3 class="text-base font-extrabold text-magnus-dark mb-3 uppercase tracking-tighter">Máquinas Pesadas</h3>
+                            <ul class="text-sm text-gray-600 space-y-2">
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Retroescavadeiras e Escavadeiras</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Guindastes e Munck</li>
+                                <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-magnus-blue flex-shrink-0"></i> Emissão de ART</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== CAD & IMPRESSÃO 3D ===================== -->
+        <section id="cad-3d" class="py-16 sm:py-20 lg:py-24 bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+
+                    <!-- ESQUERDA -->
+                    <div class="lg:w-1/2 w-full">
+                        <span class="text-magnus-blue font-bold uppercase tracking-[0.2em] text-xs sm:text-sm">
+                            INOVAÇÃO E PROTOTIPAGEM
+                        </span>
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-magnus-dark mt-3 mb-5 sm:mb-6 leading-tight">
+                            Desenvolvimento CAD e Impressão 3D
+                        </h2>
+                        <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10">
+                            Transformamos suas ideias em soluções reais através da modelagem digital,
+                            prototipagem 3D e fabricação. Utilizamos softwares de última geração e
+                            tecnologia de manufatura aditiva para acelerar o desenvolvimento do seu produto.
+                        </p>
+
+                        <!-- Cards em grid 2 colunas -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                            <div class="p-5 sm:p-6 rounded-2xl bg-magnus-light border border-slate-200 hover:border-magnus-blue transition-all duration-300 group">
+                                <div class="w-11 h-11 bg-white rounded-xl shadow-sm flex items-center justify-center text-magnus-blue mb-4 group-hover:bg-magnus-blue group-hover:text-white transition-all">
+                                    <i data-lucide="layout" class="w-5 h-5"></i>
+                                </div>
+                                <h4 class="font-bold text-magnus-dark text-base sm:text-lg mb-2">Modelagem CAD 3D</h4>
+                                <p class="text-sm text-gray-500 leading-relaxed">
+                                    Desenvolvimento de peças, conjuntos complexos e detalhamento técnico para fabricação.
+                                </p>
+                            </div>
+                            <div class="p-5 sm:p-6 rounded-2xl bg-magnus-light border border-slate-200 hover:border-magnus-blue transition-all duration-300 group">
+                                <div class="w-11 h-11 bg-white rounded-xl shadow-sm flex items-center justify-center text-magnus-blue mb-4 group-hover:bg-magnus-blue group-hover:text-white transition-all">
+                                    <i data-lucide="layers" class="w-5 h-5"></i>
+                                </div>
+                                <h4 class="font-bold text-magnus-dark text-base sm:text-lg mb-2">Impressão 3D</h4>
+                                <p class="text-sm text-gray-500 leading-relaxed">
+                                    Prototipagem rápida em diversos materiais para validação de forma e função.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 sm:mt-10">
+                            <a href="https://wa.me/5511949708584"
+                               class="btn inline-flex gap-3 px-7 sm:px-8 py-4 bg-magnus-dark text-white rounded-xl font-bold uppercase tracking-wider hover:bg-magnus-blue transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base">
+                                Solicitar Projeto CAD
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- DIREITA — imagens lado a lado -->
+                    <!-- CORREÇÃO: min-w-0 para evitar overflow; altura dos cards ajustada -->
+                    <div class="lg:w-1/2 relative w-full min-w-0">
+                        <div class="absolute -inset-4 bg-magnus-blue/5 rounded-3xl -z-10 rotate-3"></div>
+                        <div class="grid grid-cols-2 gap-3 sm:gap-4 cad-image-col">
+
+                            <!-- Coluna esquerda -->
+                            <div class="flex flex-col gap-3 sm:gap-4 min-w-0">
+                                <div class="h-[180px] sm:h-[240px] lg:h-[300px] overflow-hidden rounded-2xl shadow-lg border-2 border-white">
+                                    <img src=".\imagens\cad6.png" alt="Modelagem CAD" class="w-full h-full object-cover">
+                                </div>
+                                <div class="h-[80px] sm:h-[100px] lg:h-[110px] bg-magnus-blue rounded-2xl text-white px-4 sm:px-6 py-4 sm:py-5 flex flex-col justify-center shadow-lg">
+                                    <p class="text-2xl sm:text-3xl font-black leading-none mb-1">CAD</p>
+                                    <p class="text-[9px] sm:text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.25em] font-semibold opacity-80">
+                                        Modelagem e Fabricação
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Coluna direita -->
+                            <div class="flex flex-col gap-3 sm:gap-4 min-w-0">
+                                <div class="h-[80px] sm:h-[100px] lg:h-[110px] bg-magnus-dark rounded-2xl text-white px-4 sm:px-6 py-4 sm:py-5 flex flex-col justify-center shadow-lg">
+                                    <i data-lucide="box" class="w-6 h-6 text-magnus-blue mb-1 sm:mb-2"></i>
+                                    <p class="font-bold text-sm sm:text-base leading-tight">Engenharia Reversa</p>
+                                </div>
+                                <div class="h-[180px] sm:h-[240px] lg:h-[300px] overflow-hidden rounded-2xl shadow-lg border-2 border-white">
+                                    <img src="./imagens/impressao3d.png" alt="Impressora 3D" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== PROCESSO DE TRABALHO ===================== -->
+        <section class="py-16 sm:py-20 lg:py-24 bg-magnus-light">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div class="text-center mb-12 sm:mb-16 lg:mb-20">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-magnus-dark mb-3 sm:mb-4">Nossa Metodologia</h2>
+                    <p class="text-gray-500 max-w-2xl mx-auto text-sm sm:text-base">Excelência técnica em cada etapa do desenvolvimento do projeto.</p>
+                </div>
+
+                <!-- MELHORIA: em mobile exibe como lista vertical; grid de 5 só em md+ -->
+                <div class="relative grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-6 sm:gap-8">
+                    <!-- Linha conectora — apenas desktop -->
+                    <div class="hidden md:block absolute top-8 left-8 right-8 h-[2px] bg-gray-200 -z-10"></div>
+
+                    <!-- Etapa 1 -->
+                    <div class="flex sm:flex-col items-center sm:items-center sm:text-center gap-4 sm:gap-0 group">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-magnus-dark text-white rounded-full flex items-center justify-center sm:mb-4 border-4 border-white shadow-xl transition-transform group-hover:scale-110 font-bold text-lg">1</div>
+                        <div class="sm:text-center">
+                            <h4 class="font-bold text-magnus-dark mb-1 sm:mb-2">Entendimento</h4>
+                            <p class="text-xs text-gray-400">Mapeamento inicial da necessidade técnica.</p>
+                        </div>
+                    </div>
+
+                    <!-- Etapa 2 -->
+                    <div class="flex sm:flex-col items-center sm:items-center sm:text-center gap-4 sm:gap-0 group">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-magnus-dark text-white rounded-full flex items-center justify-center sm:mb-4 border-4 border-white shadow-xl transition-transform group-hover:scale-110 font-bold text-lg">2</div>
+                        <div class="sm:text-center">
+                            <h4 class="font-bold text-magnus-dark mb-1 sm:mb-2">Análise Técnica</h4>
+                            <p class="text-xs text-gray-400">Avaliação física e documental detalhada.</p>
+                        </div>
+                    </div>
+
+                    <!-- Etapa 3 -->
+                    <div class="flex sm:flex-col items-center sm:items-center sm:text-center gap-4 sm:gap-0 group">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-magnus-blue text-white rounded-full flex items-center justify-center sm:mb-4 border-4 border-white shadow-xl transition-transform group-hover:scale-110 font-bold text-lg">3</div>
+                        <div class="sm:text-center">
+                            <h4 class="font-bold text-magnus-dark mb-1 sm:mb-2">Solução</h4>
+                            <p class="text-xs text-gray-400">Desenvolvimento do projeto e laudo.</p>
+                        </div>
+                    </div>
+
+                    <!-- Etapa 4 -->
+                    <div class="flex sm:flex-col items-center sm:items-center sm:text-center gap-4 sm:gap-0 group">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-magnus-dark text-white rounded-full flex items-center justify-center sm:mb-4 border-4 border-white shadow-xl transition-transform group-hover:scale-110 font-bold text-lg">4</div>
+                        <div class="sm:text-center">
+                            <h4 class="font-bold text-magnus-dark mb-1 sm:mb-2">Execução</h4>
+                            <p class="text-xs text-gray-400">Entrega técnica com emissão de ART.</p>
+                        </div>
+                    </div>
+
+                    <!-- Etapa 5 -->
+                    <div class="flex sm:flex-col items-center sm:items-center sm:text-center gap-4 sm:gap-0 group">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-magnus-dark text-white rounded-full flex items-center justify-center sm:mb-4 border-4 border-white shadow-xl transition-transform group-hover:scale-110 font-bold text-lg">5</div>
+                        <div class="sm:text-center">
+                            <h4 class="font-bold text-magnus-dark mb-1 sm:mb-2">Suporte</h4>
+                            <p class="text-xs text-gray-400">Acompanhamento e consultoria técnica.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== SOBRE ===================== -->
+        <section id="sobre" class="py-16 sm:py-20 lg:py-24 bg-magnus-dark text-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+
+                    <!-- Texto -->
+                    <div class="lg:w-1/2 w-full">
+                        <div class="mb-6 sm:mb-10">
+                            <span class="text-magnus-blue font-bold uppercase tracking-[0.2em] text-xs sm:text-sm">Sobre a Magnus</span>
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mt-2 leading-tight">
+                                Compromisso com a Excelência Industrial
+                            </h2>
+                        </div>
+                        <p class="text-gray-400 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8">
+                            A Magnus Engenharia e Projetos oferece soluções completas em engenharia mecânica,
+                            com foco em qualidade, segurança e eficiência. Atuamos com laudos técnicos, ART,
+                            projetos e impressão 3D, atendendo demandas industriais com precisão e agilidade.
+                        </p>
+                        <p class="text-gray-400 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10">
+                            Nosso compromisso é entregar soluções confiáveis e sob medida para cada cliente,
+                            garantindo que sua empresa opere dentro das normas vigentes e com máxima performance.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="flex items-start gap-3">
+                                <div class="p-2 bg-magnus-blue/20 rounded-lg text-magnus-blue flex-shrink-0">
+                                    <i data-lucide="award" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm sm:text-base">Alta Confiabilidade</h4>
+                                    <p class="text-xs text-gray-500 uppercase tracking-tighter">Precisão Técnica</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="p-2 bg-magnus-blue/20 rounded-lg text-magnus-blue flex-shrink-0">
+                                    <i data-lucide="zap" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm sm:text-base">Agilidade</h4>
+                                    <p class="text-xs text-gray-500 uppercase tracking-tighter">Processos Otimizados</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Imagem -->
+                    <div class="lg:w-1/2 relative w-full">
+                        <div class="absolute -top-8 -left-8 w-32 h-32 bg-magnus-blue opacity-10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="relative z-10 border-4 border-magnus-blue/20 rounded-2xl p-3 sm:p-4">
+                            <img src="./imagens/compromisso.jpg"
+                                 alt="Equipe Magnus Engenharia"
+                                 class="rounded-xl shadow-2xl w-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-magnus-blue opacity-10 rounded-full blur-3xl pointer-events-none"></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== DIFERENCIAIS ===================== -->
+        <section class="py-14 sm:py-20 bg-magnus-light">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- MELHORIA: grid 2 colunas no mobile, 4 no md -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10 lg:gap-12">
+
+                    <div class="text-center">
+                        <div class="mb-3 sm:mb-4 text-magnus-blue flex justify-center">
+                            <i data-lucide="user-check" class="w-8 h-8 sm:w-10 sm:h-10"></i>
+                        </div>
+                        <h4 class="font-bold text-magnus-dark mb-1 uppercase text-xs sm:text-sm tracking-widest">Atendimento Personalizado</h4>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="mb-3 sm:mb-4 text-magnus-blue flex justify-center">
+                            <i data-lucide="clock" class="w-8 h-8 sm:w-10 sm:h-10"></i>
+                        </div>
+                        <h4 class="font-bold text-magnus-dark mb-1 uppercase text-xs sm:text-sm tracking-widest">Agilidade</h4>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="mb-3 sm:mb-4 text-magnus-blue flex justify-center">
+                            <i data-lucide="puzzle" class="w-8 h-8 sm:w-10 sm:h-10"></i>
+                        </div>
+                        <h4 class="font-bold text-magnus-dark mb-1 uppercase text-xs sm:text-sm tracking-widest">Soluções Sob Medida</h4>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="mb-3 sm:mb-4 text-magnus-blue flex justify-center">
+                            <i data-lucide="shield" class="w-8 h-8 sm:w-10 sm:h-10"></i>
+                        </div>
+                        <h4 class="font-bold text-magnus-dark mb-1 uppercase text-xs sm:text-sm tracking-widest">Confiabilidade Técnica</h4>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== CONTATO ===================== -->
+        <section id="contato" class="py-16 sm:py-20 lg:py-24 bg-white relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- CORREÇÃO: card de contato — no mobile empilha verticalmente com padding correto -->
+                <div class="bg-magnus-dark rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row">
+
+                    <!-- Info -->
+                    <div class="lg:w-1/3 bg-magnus-blue p-8 sm:p-10 lg:p-12 text-white">
+                        <h3 class="text-2xl sm:text-3xl font-black mb-5 sm:mb-8 leading-tight">
+                            Vamos tirar seu projeto do papel?
+                        </h3>
+                        <p class="text-blue-100 mb-8 sm:mb-10 text-sm sm:text-base">
+                            Fale diretamente com nossa engenharia para um orçamento detalhado.
+                        </p>
+
+                        <div class="space-y-5 sm:space-y-6">
+
+                            <div class="flex items-center gap-4">
+                                <div class="bg-white/20 p-2.5 sm:p-3 rounded-lg flex-shrink-0">
+                                    <i data-lucide="phone" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] uppercase font-bold opacity-70">Telefone / WhatsApp</p>
+                                    <p class="font-bold text-sm sm:text-base">(11) 94970-8584</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="bg-white/20 p-2.5 sm:p-3 rounded-lg flex-shrink-0">
+                                    <i data-lucide="mail" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <p class="text-[10px] uppercase font-bold opacity-70">E-mail Técnico</p>
+                                    <p class="font-bold text-xs sm:text-sm lg:text-base email-break">contatoengmagnus@gmail.com</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <a href="https://wa.me/5511949708584"
+                           class="btn mt-8 sm:mt-12 gap-3 w-full py-4 bg-white text-magnus-blue rounded-xl font-black uppercase tracking-wider hover:bg-magnus-dark hover:text-white transition-all shadow-xl text-sm sm:text-base">
+                            <i data-lucide="message-circle" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                            Chamar no WhatsApp
+                        </a>
+                    </div>
+
+                    <!-- Formulário -->
+                    <!-- CORREÇÃO: padding responsivo e p-12 original só no lg -->
+                    <div class="lg:w-2/3 contact-form-section bg-white">
+                        <h4 class="text-xl sm:text-2xl font-black text-magnus-dark mb-6 sm:mb-8 uppercase tracking-tight">
+                            Formulário de Orçamento
+                        </h4>
+                        <form action="#" class="space-y-5 sm:space-y-6">
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Nome Completo</label>
+                                    <input type="text"
+                                           class="w-full bg-magnus-light border-none rounded-lg p-3.5 sm:p-4 text-sm outline-none transition"
+                                           placeholder="Ex: Engenheiro Silva">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">E-mail Corporativo</label>
+                                    <input type="email"
+                                           class="w-full bg-magnus-light border-none rounded-lg p-3.5 sm:p-4 text-sm outline-none transition"
+                                           placeholder="seu@empresa.com.br">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Qual serviço você precisa?</label>
+                                <select class="w-full bg-magnus-light border-none rounded-lg p-3.5 sm:p-4 text-sm outline-none transition appearance-none">
+                                    <option>Laudo NR 11</option>
+                                    <option>Laudo NR 12</option>
+                                    <option>Laudo NR 13</option>
+                                    <option>PMOC / Ar Condicionado</option>
+                                    <option>Exaustores Industriais</option>
+                                    <option>Perícia Veicular</option>
+                                    <option>Projetos / Impressão 3D</option>
+                                    <option>Outros</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Mensagem / Detalhes do Projeto</label>
+                                <textarea rows="4"
+                                          class="w-full bg-magnus-light border-none rounded-lg p-3.5 sm:p-4 text-sm outline-none transition resize-y"
+                                          placeholder="Descreva brevemente sua necessidade..."></textarea>
+                            </div>
+
+                            <!-- MELHORIA: botão com tracking menor para não quebrar em mobile -->
+                            <button type="submit"
+                                    class="btn w-full bg-magnus-dark text-white font-black py-4 rounded-xl uppercase tracking-[0.1em] sm:tracking-[0.2em] hover:bg-magnus-blue transition-all shadow-lg text-sm sm:text-base">
+                                Enviar Solicitação Técnica
+                            </button>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="bg-magnus-dark py-12 sm:py-16 text-white border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- MELHORIA: footer empilhado no mobile, linha no md -->
+            <div class="flex flex-col gap-8 md:flex-row md:justify-between md:items-start">
+
+                <!-- Brand -->
+                <div class="max-w-xs">
+                    <div class="flex items-center gap-3 mb-3 sm:mb-4">
+                        <div class="w-8 h-8 bg-magnus-blue flex items-center justify-center rounded flex-shrink-0">
+                            <i data-lucide="component" class="text-white w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </div>
+                        <span class="font-black text-lg sm:text-xl tracking-tighter">MAGNUS ENGENHARIA</span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Soluções completas em engenharia mecânica para indústrias e empresas. Da ideia à solução técnica com emissão de ART.
+                    </p>
+                </div>
+
+                <!-- Links -->
+                <div class="flex gap-6 sm:gap-8 text-sm font-bold uppercase tracking-widest flex-wrap">
+                    <a href="#servicos" class="text-gray-400 hover:text-white transition">Serviços</a>
+                    <a href="#sobre"    class="text-gray-400 hover:text-white transition">Empresa</a>
+                    <a href="#contato"  class="text-gray-400 hover:text-white transition">Privacidade</a>
+                </div>
+
+                <!-- Social -->
+                <div class="flex gap-3 sm:gap-4">
+                    <a href="#" aria-label="LinkedIn"
+                       class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-magnus-blue transition">
+                        <i data-lucide="linkedin" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                    </a>
+                    <a href="#" aria-label="Instagram"
+                       class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-magnus-blue transition">
+                        <i data-lucide="instagram" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-white/5 text-center text-gray-600 text-xs uppercase tracking-widest">
+                &copy; 2024 Magnus Engenharia e Projetos. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Iniciar Ícones Lucide
+        lucide.createIcons();
+
+        // =====================
+        // MENU MOBILE
+        // =====================
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu   = document.getElementById('mobile-menu');
+        const closeMenu    = document.getElementById('close-menu');
+        const menuLinks    = mobileMenu.querySelectorAll('a');
+
+        function openMenu() {
+            mobileMenu.classList.remove('hidden');
+            mobileToggle.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden'; // impede scroll do body
+        }
+        function closeMenuFn() {
+            mobileMenu.classList.add('hidden');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        mobileToggle.addEventListener('click', openMenu);
+        closeMenu.addEventListener('click', closeMenuFn);
+        menuLinks.forEach(link => link.addEventListener('click', closeMenuFn));
+
+        // Fechar com tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMenuFn();
+        });
+
+        // =====================
+        // NAVBAR SCROLL EFFECT
+        // =====================
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.pageYOffset > 50) {
+                header.classList.add('shadow-2xl');
+            } else {
+                header.classList.remove('shadow-2xl');
+            }
+        }, { passive: true });
+
+        // =====================
+        // SCROLL SUAVE
+        // =====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (!target) return;
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
